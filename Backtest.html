@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Matthieu_Paulignan</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Accueil</a>
+				<nav>
+					<ul>
+						<!--<li><a href="index.html">Accueil</a></li>-->
+						<li><a href="Backtest.html" class="active">Projet Backtest</a></li>
+						<li><a href="Chatbot.html" class="active">Projet Chatbot</a></li>
+						<!--<li><a href="elements.html">Elements</a></li>-->
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Projet Backtest</h1>
+							<h2>Contexte</h2>
+							<p> De nombreuses vidéos sont disponibles en ligne pour présenter des stratégies qui permettraient de gagner de l'argent facilement avec la bourse.
+								Celles-ci comportent en général de nombreux détails sur la partie métier mais peu sur les éléments de validité statistique qui ont amené à
+								choisir cette stratégie. Les données boursières sont publiques et facilement accessible, créer un outil pour tester ces stratégies et les
+								analyser de manière automatique constitue donc un exercice abordable et intéressant.
+							</p>
+							<h2>Objectif</h2>
+							<p>
+								Mon objectif est de créer un outil qui permette d'appliquer la stratégie sur différents jeux de données en ajustant les paramètres si nécessaire.
+								Les résultats d'un tests doivent ensuite pouvoir être exportés pour être présentés de manière claire afin de trancher sur la rentabilité ou non
+								des stratégies testées. Pour l'exercice, j'ai testé une stratégie très court terme (scalping) sur le marché du Forex.
+							</p>
+							<h2>Données utilisées</h2>
+							<p>Les données utilisées proviennent de <a href="https://forexsb.com/">Forex XSB</a>. Ce site permet de récupérer les 100 000 dernières cotations
+								d'un indice sur différents intervalles de temps. Ici, nous avons pris les cotations sur les intervalles de temps en 5 minutes, 4 heures et 1 jour.
+							</p>
+							<h2>Méthodologie</h2>
+							<p>Pour analyser les données, j'ai suivi le processus suivant:</p>
+								<ol>
+									<li>Nettoyage et préparation des données sur Microsoft Excel</li>
+									<li>Création de l'outil de test sur Python</li>
+									<li>Création d'une vue sous Microsoft PowerBI pour affiner les résultats</li>
+									<li>Affinage des paramètres en m'appuyant sur Python et PowerBI</li>
+								</ol>
+							<h2>Résultats clés</h2>
+							<h3>Evaluation des performances</h3>
+							<div class="box alt">
+								<div class="row gtr-uniform">
+									<div class = "col-6"><span class="image fit"><img src="images/EMA50200XAU5Final.png" alt="" /></span></div>
+									<div class = "col-6"><p>
+										Pour déterminer la validité de la stratégie, on utilise le taux de réussite. Celui-ci dépend du ratio de risque récompense adopté pour la stratégie.
+										Il faut donc faire varier les paramètres de la stratégie pour maximiser ce taux de réussite. Ces changements affectent cependant également la taille 
+										de l'échantillon analysé. Il faut donc également suivre l'évolution de la marge d'erreur, calculée ici avec un indice de confiance de 95%.
+										Une stratégie sera donc considérée comme performante si son taux de réussite corrigé par la margé d'erreur est supérieur au taux de réussite minimum.
+									</p></div>
+									<div class ="col-12"><p>Le graphique ci-dessous récapitule les taux de réussite minimum et maximum calculés pour différents actifs avec les mêmes paramètres.</p></div>
+									<div class ="col-12-small"><span class="image fit"><img src="images/TxReussiteBacktest.png" alt="" /></span></div>
+								</div>
+							</div>
+							<h3>Résultats</h3>
+							<p>Les résultats présentés sur le graphique montrent que la stratégie testée peut être rentable sur certains actifs (XAUUSD et GBPUSD). 
+								Sur certaines simulations, la stratégie n'était pas rentable sur ces actifs. Pour EURUSD et USDCHF, on ne peut pas affirmer que la stratégie 
+								est rentable. Le changement de paramètre ne permet pas de changer ce résultat.
+							</p>
+							<h3>Conclusions</h3>
+							<p>Les modifications faites sur le paramétrage ne concernaient pas la stratégie. Quel que soit l'actif, celle-ci a toujours été utilisée de la même 
+								manière. Les ajustements effectués qui permettent d'avoir un résultat rentable ou non concernent exclusivement la manière dont la stratégie est 
+								appliquée : heures où la stratégie est appliquée, gestion du risque, gestion des entrées et sorties, gestion des pertes. Ainsi, ce ne sont pas 
+								les éléments sur la stratégie qui permettraient d'être rentable mais plutôt ceux sur sa mise en oeuvre.
+							</p>
+							<h2>Apprentissages</h2>
+							<p>Ce projet m'a permis d'approfondir mes connaissances sur Python en créant un programme plus complexe. Pour avoir un outil opérationnel, j'ai utilisé la 
+								notation hongroise, ce qui a facilité le débuggage et j'ai adopté une architecture modulaire sur le script afin de pouvoir plus facilement décomposer les différentes 
+								actions de mon script. J'ai également mieux exploité les forces de Jupyter et ses possibilités avec les cellules. Pour les tests, le programme me fournissait des
+								indicateurs clefs servant à prévisualiser l'intérêt d'un paramétrage. Si l'intérêt était validé, une autre cellule permettait l'enregistrement des résultats.
+							</p>
+							<h2>Pour en savoir plus</h2>
+							<p>Vous trouverez ci-dessous le lien vers le projet. Dans ce dossier, vous trouverez des éléments complémentaires sur les outils utilisés 
+								(script Python, exemple de données utilisées, aperçu du rapport PowerBI, exemple de journal).</p>
+							<a href="https://github.com/MPaulignan/Projets" class="button">Projet Backtest</a><a href="index.html" class="button">Accueil</a>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
