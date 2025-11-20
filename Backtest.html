@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Matthieu_Paulignan</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Accueil</a>
+				<nav>
+					<ul>
+						<!--<li><a href="index.html">Accueil</a></li>-->
+						<li><a href="Backtest.html" class="active">Projet Backtest</a></li>
+						<li><a href="Chatbot.html" class="active">Projet Chatbot</a></li>
+						<!--<li><a href="elements.html">Elements</a></li>-->
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Projet Backtest</h1>
+							<h2>Contexte</h2>
+							<p>Dans le domaine de la finance de marché, de nombreuses ressources en ligne présentent des stratégies de trading censées générer 
+								des profits rapidement. Ces contenus mettent souvent l’accent sur les aspects opérationnels sans toutefois approfondir la rigueur statistique 
+								nécessaire à la validation de ces approches. Les données boursières, étant publiques et accessibles, offrent une opportunité concrète pour 
+								appliquer des méthodes d’analyse avancées et mieux comprendre les facteurs qui peuvent influencer la validité de ces stratégies.
+							</p>
+							<h2>Objectif</h2>
+							<p>Mon objectif est de créer un outil qui permette d'appliquer la stratégie sur différents jeux de données en ajustant les paramètres si nécessaire. 
+								Les résultats d’un test doivent ensuite pouvoir être exportés pour être présentés de manière claire afin de trancher sur la rentabilité ou non 
+								de la stratégie testée en fonction des paramètres choisis. Pour l'exercice, j'ai testé une stratégie très court terme (scalping) sur le marché du 
+								Forex, basée sur les moyennes mobiles exponentielles (EMA).
+							</p>
+							<h2>Données utilisées</h2>
+							<p>Les données utilisées proviennent de <a href="https://forexsb.com/">Forex XSB</a>. Ce site permet de récupérer les 100 000 dernières cotations 
+								d'un indice sur différents intervalles de temps. Ainsi, on obtient directement le niveau de granularité nécessaire pour nos différentes analyses 
+								tout en pouvant remonter assez loin dans le temps. Ici, nous avons pris les cotations sur les intervalles de temps en 5 minutes, 4 heures et 
+								1 jour, cela permet de tester la stratégie sur les 16 derniers mois.
+							</p>
+							<h2>Méthodologie</h2>
+							<p>Pour analyser les données, j'ai suivi le processus suivant :</p>
+								<ol>
+									<li>Nettoyage et préparation des données sur Microsoft Excel : remplacement de certains caractères, suppression des colonnes inutiles, 
+										ajout de nouvelles colonnes pour la date et l’heure</li>
+									<li>Création de l'outil de test sur Python : à partir des données sur 5 minutes, l’outil teste la stratégie et fournit un journal de trading 
+										sous forme de tableau Excel ainsi qu’une première série d’indicateurs clefs : gain/perte net, taux de réussite de la stratégie, 
+										marge d’erreur, nombre de positions ouvertes, série maximum de pertes et perte financière associée.</li>
+									<li>Création d’un rapport PowerBI pour affiner les résultats : prise en compte des unités de temps supérieures (4h, 1 jour) pour chercher 
+										des patterns supplémentaires en se basant sur les données du journal.</li>
+									<li>4.	Affinage des paramètres en m'appuyant sur Python et PowerBI. Le paramétrage est réalisé dans l’outil Python et concerne 
+										les points suivants : pertes quotidiennes maximum, capital de départ, capital à risque, horaires de trading, ratio risque récompense, 
+										actif tradé.</li>
+								</ol>
+							<h2>Résultats clés</h2>
+							<h3>Evaluation des performances</h3>
+							<div class="box alt">
+								<div class="row gtr-uniform">
+									<div><span class="image left"><img src="images/EMA50200XAU5Final.png" alt="" /></span>
+									<p>Pour évaluer la stratégie, j’ai choisi de prendre en compte quatre indicateurs clefs :
+										<ul>
+											<li>Le taux de réussite,</li>
+											<li>Le nombre de positions ouvertes,</li>
+											<li>Le nombre de pertes consécutives,</li>
+											<li>La perte maximale enregistrée.</li>
+										</ul></p>
+									<p>Le taux de réussite correspond aux positions ayant permis de réaliser un gain rapporté au nombre de positions ouvertes. 
+										Il doit être supérieur à un taux plancher définit par le ratio de risque récompense. Ce ratio correspond aux gains qu’on peut espérer 
+										réaliser en fonction du montant qu’on risque. Par exemple : si je peux gagner 2 chaque fois que je risque 1, mon ratio de risque 
+										récompense est de 1 pour 2. Mon taux plancher sera alors égal à 33,33%. Pour que la stratégie soit rentable, il faudra que son taux de 
+										réussite soit donc supérieur à ce taux plancher.</p>
+									<p>Le nombre de positions ouvertes correspond à la taille de l’échantillon. Il permet de calculer la marge d’erreur. Pour ce projet, 
+										j’ai calculé la marge d’erreur avec un indice de confiance de 95%. J’utilise cet indicateur pour calculer un taux de réussite corrigé 
+										avec une vision pessimiste. Pour le calculer, je soustrais la marge d’erreur au taux de réussite. Si le taux de réussite corrigé est 
+										supérieur au taux plancher, la stratégie est alors définie comme rentable. L’indicateur de rentabilité pour ce projet est donc l’écart 
+										entre le taux de réussite corrigé et le taux plancher. Plus l’écart est positif et élevé, plus la stratégie est rentable et fiable.</p>
+									<p>Enfin, les indicateurs relatifs au nombre de pertes consécutives et à la perte maximale enregistrée permettent d’ajuster la gestion du 
+										risque et du capital. Moins la stratégie a de pertes consécutives et moins la perte maximale enregistrée est importante, plus la 
+										stratégie est sûre.
+									</p></div>
+								</div>
+							</div>
+							<h3>Résultats</h3>
+							<p>Le graphique ci-dessous présente un exemple de l’utilisation de l’outil pour 4 actifs. Les mêmes paramètres ont été testés pour chaque actif. 
+								Le point vert représente l’écart le plus positif entre le taux de réussite corrigé et le taux plancher, le point rouge, l’écart le plus négatif. 
+								La droite noire qui relie les deux points rassemblent ainsi tous les résultats obtenus pour chaque stratégie et permet de visualiser la 
+								différence entre la plus performante et la moins performante.</p>
+							<span class="image fit"><img src="images/TxReussiteBacktest.png" alt="" /></span>
+							<p>On peut ainsi voir que deux actifs permettent d’avoir des résultats positifs. Le XAUUSD dont la série de perte maximale s’élève à 9 pour 255,94€ 
+								et le GBPUSD qui obtient respectivement 12 et 147,81€ pour les mêmes indicateurs. Ainsi, avec le XAUUSD, on aura une stratégie assez rentable, 
+								avec des pertes cumulées assez importantes alors que le GBPUSD offrira une stratégie plus rentable avec une séries de pertes maximale plus longue.
+							</p>
+							<h3>Conclusions</h3>
+							<p>Les modifications faites sur le paramétrage ne concernaient pas la stratégie. Quel que soit l'actif, celle-ci a toujours été utilisée de la même 
+								manière. Les ajustements effectués qui permettent d'avoir un résultat rentable ou non concernent exclusivement la manière dont la stratégie est 
+								appliquée : heures où la stratégie est appliquée, gestion du risque, gestion des entrées et sorties, gestion des pertes. Ainsi, ce ne sont pas 
+								les éléments sur la stratégie qui permettraient d'être rentable mais plutôt ceux sur sa mise en œuvre. Les résultats obtenus montrent que suivant 
+								l’actif et le paramétrage, la stratégie peut apporter des résultats très différents. La prise en compte de ces éléments est indispensable pour 
+								améliorer les prises de décision et mieux comprendre les résultats que peut produire la stratégie.
+							</p>
+							<h2>Limites</h2>
+							<p>Cette analyse contient plusieurs limites qu’il convient de rappeler :</p>
+								<ul>
+									<li>Pour approfondir les résultats et obtenir des éléments plus précis il conviendrait d’élargir la plage temporelle du test. La granularité 
+										actuelle de l’analyse est cependant suffisante pour répondre aux objectifs mentionnés en début de projet,</li>
+									<li>L’analyse pourrait être élargie à d’autres actifs qui pourraient présenter de meilleurs résultats, moins dépendants des paramètres 
+										d’exécution, dans ce cas, il serait plus intéressant d’automatiser le nettoyage des données en s’appuyant sur une macro VBA ou d’autres 
+										outils comme Dataiku,</li>
+									<li>D’autres indicateurs pourraient être utilisés pour évaluer la validité de la stratégie (gain ou perte totale par exemple),</li>
+									<li>D’autres stratégies pourraient être moins indépendantes des paramètres d’exécution, les conclusions actuelles ne sont pas généralisables.</li>
+								</ul>
+							<h2>Apprentissages</h2>
+							<p>Ce projet m'a permis d'approfondir mes connaissances sur Python en créant un programme plus complexe. Pour avoir un outil opérationnel, j'ai utilisé la 
+								notation hongroise, ce qui a facilité le débuggage et j'ai adopté une architecture modulaire sur le script afin de pouvoir plus facilement décomposer les différentes 
+								actions de mon script. J'ai également mieux exploité les forces de Jupyter et ses possibilités avec les cellules. Pour les tests, le programme me fournissait des
+								indicateurs clefs servant à prévisualiser l'intérêt d'un paramétrage. Si l'intérêt était validé, une autre cellule permettait l'enregistrement des résultats.
+							</p>
+							<h2>Pour en savoir plus</h2>
+							<p>Vous trouverez ci-dessous le lien vers le projet. Dans ce dossier, vous trouverez des éléments complémentaires sur les outils utilisés 
+								(script Python, exemple de données utilisées, aperçu du rapport PowerBI, exemple de journal).</p>
+							<a href="https://github.com/MPaulignan/Projet_Backtest.git" class="button">Projet Backtest</a><a href="index.html" class="button">Accueil</a>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
